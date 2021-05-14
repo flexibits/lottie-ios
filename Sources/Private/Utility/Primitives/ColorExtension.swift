@@ -100,9 +100,13 @@ extension Color {
     CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 0])!
   }
 
-  var cgColorValue: CGColor {
-    // TODO: Fix color spaces
-    let colorspace = CGColorSpaceCreateDeviceRGB()
-    return CGColor(colorSpace: colorspace, components: [CGFloat(r), CGFloat(g), CGFloat(b), CGFloat(a)]) ?? Color.clearColor
-  }
+    var cgColorValue: CGColor {
+      let colorSpace: CGColorSpace
+      if #available(iOS 9.3, *) {
+        colorSpace = CGColorSpace.init(name: CGColorSpace.displayP3) ?? CGColorSpaceCreateDeviceRGB()
+      } else {
+        colorSpace = CGColorSpaceCreateDeviceRGB()
+      }
+      return CGColor(colorSpace: colorSpace, components: [CGFloat(r), CGFloat(g), CGFloat(b), CGFloat(a)]) ?? Color.clearColor
+    }
 }
