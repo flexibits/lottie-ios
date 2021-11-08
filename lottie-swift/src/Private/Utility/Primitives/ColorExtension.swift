@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreGraphics
-import UIKit
 
 extension Color: Codable {
 
@@ -69,20 +68,13 @@ extension Color {
     return CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 0])!
   }
   
-  var cgColorValue: CGColor {
-    if #available(iOS 10, *), #available(tvOS 10, *) {
-      let color: UIColor
-
-      if AnimationColorSpace.shared.useP3ColorSpace {
-        color = UIColor(displayP3Red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: CGFloat(a))
+    var cgColorValue: CGColor {
+      let colorSpace: CGColorSpace
+      if #available(iOS 9.3, *) {
+        colorSpace = CGColorSpace.init(name: CGColorSpace.displayP3) ?? CGColorSpaceCreateDeviceRGB()
       } else {
-        color = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: CGFloat(a))
+        colorSpace = CGColorSpaceCreateDeviceRGB()
       }
-
-      return color.cgColor
-    } else {
-      let colorspace = CGColorSpaceCreateDeviceRGB()
-      return CGColor(colorSpace: colorspace, components: [CGFloat(r), CGFloat(g), CGFloat(b), CGFloat(a)]) ?? Color.clearColor
+      return CGColor(colorSpace: colorSpace, components: [CGFloat(r), CGFloat(g), CGFloat(b), CGFloat(a)]) ?? Color.clearColor
     }
-  }
 }
