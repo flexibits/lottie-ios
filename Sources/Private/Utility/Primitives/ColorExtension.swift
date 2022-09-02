@@ -102,7 +102,7 @@ extension Color {
 
     var cgColorValue: CGColor {
       let colorSpace: CGColorSpace
-      if #available(iOS 9.3, *) {
+      if #available(iOS 9.3, macOS 10.11.2, *) {
         colorSpace = CGColorSpace.init(name: CGColorSpace.displayP3) ?? CGColorSpaceCreateDeviceRGB()
       } else {
         colorSpace = CGColorSpaceCreateDeviceRGB()
