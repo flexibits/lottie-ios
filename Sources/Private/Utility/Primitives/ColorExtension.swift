@@ -1,5 +1,5 @@
 //
-//  Color.swift
+//  LottieColor.swift
 //  lottie-swift
 //
 //  Created by Brandon Withrow on 1/14/19.
@@ -8,9 +8,9 @@
 import CoreGraphics
 import Foundation
 
-// MARK: - Color + Codable
+// MARK: - LottieColor + Codable
 
-extension Color: Codable {
+extension LottieColor: Codable {
 
   // MARK: Lifecycle
 
@@ -68,9 +68,9 @@ extension Color: Codable {
 
 }
 
-// MARK: - Color + AnyInitializable
+// MARK: - LottieColor + AnyInitializable
 
-extension Color: AnyInitializable {
+extension LottieColor: AnyInitializable {
 
   init(value: Any) throws {
     guard var array = value as? [Double] else {
@@ -94,19 +94,19 @@ extension Color: AnyInitializable {
 
 }
 
-extension Color {
+extension LottieColor {
 
   static var clearColor: CGColor {
     CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 0])!
   }
 
-    var cgColorValue: CGColor {
-      let colorSpace: CGColorSpace
-      if #available(iOS 9.3, macOS 10.11.2, *) {
-        colorSpace = CGColorSpace.init(name: CGColorSpace.displayP3) ?? CGColorSpaceCreateDeviceRGB()
-      } else {
-        colorSpace = CGColorSpaceCreateDeviceRGB()
-      }
-      return CGColor(colorSpace: colorSpace, components: [CGFloat(r), CGFloat(g), CGFloat(b), CGFloat(a)]) ?? Color.clearColor
+  var cgColorValue: CGColor {
+    let colorSpace: CGColorSpace
+    if #available(iOS 9.3, macOS 10.11.2, *) {
+      colorSpace = CGColorSpace.init(name: CGColorSpace.displayP3) ?? CGColorSpaceCreateDeviceRGB()
+    } else {
+      colorSpace = CGColorSpaceCreateDeviceRGB()
     }
+    return CGColor(colorSpace: colorSpace, components: [CGFloat(r), CGFloat(g), CGFloat(b), CGFloat(a)]) ?? LottieColor.clearColor
+  }
 }
