@@ -52,7 +52,7 @@ class DotLottieImageProvider: AnimationImageProvider {
 
   private func loadImages() {
     for url in filepath.urls {
-      #if os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst)
+      #if canImport(UIKit)
       if
         let data = try? Data(contentsOf: url),
         let image = UIImage(data: data)?.cgImage
